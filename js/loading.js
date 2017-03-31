@@ -32,13 +32,21 @@ Loading.prototype = {
 	    this.porcentaje.anchor.setTo(0.5);
 	    this.circulo = this.game.add.circle(this.game.width/2,this.game.height/2, 100, 'red', 5, 'white', false,0, 0.1);
 	    this.game.load.onCompleteFile.add(this.onCompleteFile, this);
+	    
+	    this.game.load.image('beach', 'img/roadTiles/beach.png');
+	    this.game.load.image('road', 'img/roadTiles/road.png');
+	    this.game.load.image('grass', 'img/roadTiles/grass.png');
+	    this.game.load.image('water', 'img/roadTiles/water.png');
+	    this.game.load.image('treeTall', 'img/roadTiles/treeTall.png');
+	    this.game.load.image('building1', 'img/building_1.png');
+	    this.game.load.image('building2', 'img/building_2.png');
+	    this.game.load.image('building3', 'img/building_3.png');
+	    this.game.load.image('building4', 'img/building_4.png');
+	    
 	},
 	
 	start: function () {
 		this.game.tween.add(this.porcentaje).to({alpha : 0}, 500, XEngine.Easing.Linear, true).onComplete.addOnce(function () {
-			var background = this.game.add.audio('background', true, -0.2);
-			background.persist = true;
-			background.loop(true);
 			this.game.state.start('menu');
 		}, this);
 	},
