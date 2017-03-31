@@ -1,8 +1,8 @@
 /* global XEngine Menu GamePlay*/
 
 var textStyle = {
-	font: 'PressStart',
-	font_size: 20,
+	font: 'Cookie',
+	font_size: 40,
 	font_color: 'white',
 	
 };
@@ -37,7 +37,6 @@ Loading.prototype = {
 	    this.game.load.image('road', 'img/roadTiles/road.png');
 	    this.game.load.image('grass', 'img/roadTiles/grass.png');
 	    this.game.load.image('water', 'img/roadTiles/water.png');
-	    this.game.load.image('treeTall', 'img/roadTiles/treeTall.png');
 	    this.game.load.image('building1', 'img/building_1.png');
 	    this.game.load.image('building2', 'img/building_2.png');
 	    this.game.load.image('building3', 'img/building_3.png');

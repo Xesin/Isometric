@@ -1,14 +1,11 @@
 /* global XEngine Tile localStorage*/
 var currentLevel = 1;
 var GamePlay = function (game) {
-	this.player = null;
-	this.ball = null;
-	this.bricks = null;
 	this.textStyle = {
-		font: 'PressStart',
-		font_size: 20,
+		font: 'Cookie',
+		font_size: 45,
 		font_color: 'white',
-		stroke_width: 8,
+		stroke_width: 4,
 		stroke_color: 'black'
 	};
 	this.pointerWorldPos = new XEngine.Vector(0,0);
@@ -58,6 +55,8 @@ GamePlay.prototype = {
 	},
 	
 	setUI: function () {
+		
+		//BUILDING BUTTONS
 		var backUI = this.game.add.rect(0, this.game.height - 150, this.game.width, 150, 'black');
 		backUI.fixedToCamera = true;
 		backUI.alpha = 0.2;
@@ -91,6 +90,18 @@ GamePlay.prototype = {
 		this.buildingTileUI.inputEnabled = true;
 		this.buildingTileUI.anchor.setTo(0.5);
 		this.buildingTileUI.onClick.add(function(){this.changePreviewTile('building')}, this);
+		
+		//SAVE AND LOAD
+		
+		this.saveButton = this.game.add.text(50,50, 'Save', this.textStyle);
+		this.saveButton.fixedToCamera = true;
+		this.saveButton.inputEnabled = true;
+		this.saveButton.onClick.add(this.save, this);
+		
+		this.loadButton = this.game.add.text(this.game.width - 100,50, 'Load', this.textStyle);
+		this.loadButton.fixedToCamera = true;
+		this.loadButton.inputEnabled = true;
+		this.loadButton.onClick.add(this.loadData, this);
 	},
 	
 	createPreview: function () {
@@ -144,7 +155,7 @@ GamePlay.prototype = {
 		}else if(event.keyCode == XEngine.KeyCode.S){
 			this.save();
 		}else if(event.keyCode == XEngine.KeyCode.L){
-			this.loadFromFile();
+			this.loadData();
 		}
 	},
 	
@@ -224,17 +235,19 @@ GamePlay.prototype = {
 		return this.roadTiles[coordinates.x][coordinates.y];
 	},
 	
-	save: function (text, name, type) {
+	save: function () {
 		var object = new SaveObject(this.roadTiles, this.buildingTiles);
 		localStorage.setItem('mapData', JSON.stringify(object));
 	},
 	
-	loadFromFile: function () {
+	loadData: function () {
 		var jsonLoaded = localStorage.getItem('mapData');
-		var loadedData = JSON.parse(jsonLoaded);
-		for(var i = 0; i< this.roadTiles.length; i++){
-			for(var j = 0; j < this.roadTiles[i].length; j++){
-				this.roadTiles[i][j].updateTileType(loadedData.mapTiles[i][j].type, loadedData.mapTiles[i][j].sprite);
+		if(jsonLoaded != undefined){
+			var loadedData = JSON.parse(jsonLoaded);
+			for(var i = 0; i< this.roadTiles.length; i++){
+				for(var j = 0; j < this.roadTiles[i].length; j++){
+					this.roadTiles[i][j].updateTileType(loadedData.mapTiles[i][j].type, loadedData.mapTiles[i][j].sprite);
+				}
 			}
 		}
 	}
